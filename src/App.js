@@ -9,7 +9,8 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={Login} />
-        <Route component={NotFoundPage} />
+        <Route exact path="/404" component={NotFoundPage} />
+        <Redirect to="/404"></Redirect>        
       </Switch>
     </Router>
   );
