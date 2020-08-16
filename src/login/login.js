@@ -17,7 +17,7 @@ const Title = () => {
     return (
         <div style={styles.titleBox}>
             <Logo style={styles.icon} />
-            <div className="header" style={styles.title}>Bem vindo ao site de Apontamento</div>
+            <text style={styles.title}>Bem vindo ao site de Apontamento</text>
         </div>
     );
 }
@@ -25,7 +25,7 @@ const Title = () => {
 const User = () => {
     return (
         <div style={styles.inputBox}>
-            <div style={styles.label}>Usuário</div>
+            <text style={styles.label}>Usuário</text>
             <input type="text" style={styles.inputText} ></input>
         </div>
     );
@@ -34,7 +34,7 @@ const User = () => {
 const Password = () => {
     return (
         <div style={styles.inputBox}>
-            <div style={styles.label}>Senha</div>
+            <text style={styles.label}>Senha</text>
             <input type="password" style={styles.inputText}></input>
         </div>
     );
@@ -66,17 +66,22 @@ const styles = {
         color: "#FFFFFF",
         fontSize: 30,
         textAlign: "center",
+        flexBasis:0,
+        minWidth:232,
+        
     },
     titleBox: {
         display: "flex",
         flexDirection: "row",
         marginBottom: 48,
         alignItems: "center",
+        justifyContent:"center",
+        flexBasis:0,
     },
     icon: {
         width: 24,
         height: 24,
-        marginRight:8,
+        marginRight: 8,
     },
     label: {
         color: "#FFFFFF",
