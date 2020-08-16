@@ -1,16 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ReactComponent as Logo } from './../logo.svg';
+import { Redirect } from 'react-router-dom';
 
 function Login() {
+    const [logged, setLogged] = useState(false);
+    const [userName, setUserName] = useState("");
+
+    const loginClick = () => {
+        if (userName != '' && userName != null) {
+            if (userName.toLowerCase() === 'admin') {
+                setLogged(true);
+            } else {
+                alert('Usuário não encontrado!')
+            }
+        }
+    }
+
+    const handleOnChange = (input) => {
+        setUserName(input.target.value)
+    }
+
     return (
         <div style={styles.panel}>
-            <Logo style={styles.icon}/>
+            <Logo style={styles.icon} />
             <Title />
-            <User />
+            <User onChange={handleOnChange} />
             <Password />
-            <LoginButton />
+            <LoginButton onClick={loginClick} />
             <NewUser />
             <Credits />
+            {logged && <Redirect to="/report" />}
         </div >
     );
 }
@@ -23,11 +42,11 @@ const Title = () => {
     );
 }
 
-const User = () => {
+const User = ({ onChange }) => {
     return (
         <div style={styles.inputBox}>
             <text style={styles.label}>Usuário</text>
-            <input type="text" style={styles.inputText} ></input>
+            <input type="text" onChange={onChange} style={styles.inputText} ></input>
         </div>
     );
 }
@@ -41,8 +60,18 @@ const Password = () => {
     );
 }
 
-const LoginButton = () => {
-    return <button style={styles.button} onClick={loginClick} >Entrar</button>;
+
+const Credits = () => {
+    return (
+        <div style={styles.credit}>
+            Ícones feitos por <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/br/"
+                title="Flaticon">www.flaticon.com</a>
+        </div>
+    );
+}
+
+const LoginButton = ({ onClick }) => {
+    return <button style={styles.button} onClick={onClick} >Entrar</button>;
 }
 
 const NewUser = () => {
@@ -50,28 +79,19 @@ const NewUser = () => {
 }
 
 const newUserClick = () => {
+
     alert("Novo usuário não implementado");
 }
 
-const loginClick = () => {
-    alert("Login não implementado");
-}
 
-const Credits = () => {
-    return (
-      <div style={styles.credit}>
-        Ícones feitos por <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/br/"
-          title="Flaticon">www.flaticon.com</a>
-      </div>
-    );
-  }
+
 
 const styles = {
     panel: {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        flex:1,
+        flex: 1,
     },
     title: {
         color: "#FFFFFF",
@@ -83,8 +103,8 @@ const styles = {
         flexDirection: "row",
         marginBottom: 48,
         alignItems: "center",
-        justifyContent:"center",
-        flexBasis:0,
+        justifyContent: "center",
+        flexBasis: 0,
     },
     icon: {
         width: 36,
@@ -135,7 +155,7 @@ const styles = {
         fontSize: 12,
         textAlign: "center",
         marginTop: 100,
-      }
+    }
 };
 
 export default Login;
