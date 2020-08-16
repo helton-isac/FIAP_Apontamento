@@ -1,4 +1,5 @@
 import React from 'react';
+import { ReactComponent as Logo } from './../logo.svg';
 
 function Login() {
     return (
@@ -14,14 +15,17 @@ function Login() {
 
 const Title = () => {
     return (
-        <div className="header" style={styles.title}>Bem vindo ao site de Apontamento</div>
+        <div style={styles.titleBox}>
+            <Logo style={styles.icon} />
+            <div className="header" style={styles.title}>Bem vindo ao site de Apontamento</div>
+        </div>
     );
 }
 
 const User = () => {
     return (
         <div style={styles.inputBox}>
-            <div style={styles.label} >Usuário</div>
+            <div style={styles.label}>Usuário</div>
             <input type="text" style={styles.inputText} ></input>
         </div>
     );
@@ -61,8 +65,18 @@ const styles = {
     title: {
         color: "#FFFFFF",
         fontSize: 30,
-        marginBottom: 48,
         textAlign: "center",
+    },
+    titleBox: {
+        display: "flex",
+        flexDirection: "row",
+        marginBottom: 48,
+        alignItems: "center",
+    },
+    icon: {
+        width: 24,
+        height: 24,
+        marginRight:8,
     },
     label: {
         color: "#FFFFFF",
