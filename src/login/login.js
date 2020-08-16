@@ -10,6 +10,7 @@ function Login() {
             <Password />
             <LoginButton />
             <NewUser />
+            <Credits />
         </div >
     );
 }
@@ -53,14 +54,24 @@ const newUserClick = () => {
 }
 
 const loginClick = () => {
-    
+    alert("Login não implementado");
 }
+
+const Credits = () => {
+    return (
+      <div style={styles.credit}>
+        Ícones feitos por <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/br/"
+          title="Flaticon">www.flaticon.com</a>
+      </div>
+    );
+  }
 
 const styles = {
     panel: {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        flex:1,
     },
     title: {
         color: "#FFFFFF",
@@ -118,7 +129,13 @@ const styles = {
         color: "#2ea0d6",
         minWidth: 232,
         textAlign: "center",
-    }
+    },
+    credit: {
+        color: "#FFFFFF",
+        fontSize: 12,
+        textAlign: "center",
+        marginTop: 100,
+      }
 };
 
 export default Login;
