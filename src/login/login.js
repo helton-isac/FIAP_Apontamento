@@ -4,6 +4,7 @@ import { ReactComponent as Logo } from './../logo.svg';
 function Login() {
     return (
         <div style={styles.panel}>
+            <Logo style={styles.icon}/>
             <Title />
             <User />
             <Password />
@@ -16,7 +17,6 @@ function Login() {
 const Title = () => {
     return (
         <div style={styles.titleBox}>
-            <Logo style={styles.icon} />
             <text style={styles.title}>Bem vindo ao site de Apontamento</text>
         </div>
     );
@@ -53,7 +53,7 @@ const newUserClick = () => {
 }
 
 const loginClick = () => {
-    alert("Login não implementado");
+    
 }
 
 const styles = {
@@ -66,9 +66,6 @@ const styles = {
         color: "#FFFFFF",
         fontSize: 30,
         textAlign: "center",
-        flexBasis:0,
-        minWidth:232,
-        
     },
     titleBox: {
         display: "flex",
@@ -79,9 +76,9 @@ const styles = {
         flexBasis:0,
     },
     icon: {
-        width: 24,
-        height: 24,
-        marginRight: 8,
+        width: 36,
+        height: 36,
+        marginBottom: 24,
     },
     label: {
         color: "#FFFFFF",
