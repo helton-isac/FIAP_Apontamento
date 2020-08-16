@@ -37,7 +37,7 @@ const Password = () => {
 }
 
 const LoginButton = () => {
-    return <button style={styles.button} >Entrar</button>;
+    return <button style={styles.button} onClick={loginClick} >Entrar</button>;
 }
 
 const NewUser = () => {
@@ -45,7 +45,11 @@ const NewUser = () => {
 }
 
 const newUserClick = () => {
+    alert("Novo usuário não implementado");
+}
 
+const loginClick = () => {
+    alert("Login não implementado");
 }
 
 const styles = {
@@ -53,6 +57,7 @@ const styles = {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        textAlign: "center",
     },
     title: {
         color: "#FFFFFF",
