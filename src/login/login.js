@@ -57,12 +57,12 @@ const styles = {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        textAlign: "center",
     },
     title: {
         color: "#FFFFFF",
         fontSize: 30,
         marginBottom: 48,
+        textAlign: "center",
     },
     label: {
         color: "#FFFFFF",
