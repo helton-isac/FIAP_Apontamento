@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ReactComponent as Logo } from './../logo.svg';
 import { Redirect } from 'react-router-dom';
+import { Title } from '../components/title';
 
 function Login() {
     const [logged, setLogged] = useState(false);
@@ -23,7 +24,7 @@ function Login() {
     return (
         <div style={styles.panel}>
             <Logo style={styles.icon} />
-            <Title />
+            <Title title={"Bem vindo ao site de Apontamento"} />
             <User onChange={handleOnChange} />
             <Password />
             <LoginButton onClick={loginClick} />
@@ -31,14 +32,6 @@ function Login() {
             <Credits />
             {logged && <Redirect to="/report" />}
         </div >
-    );
-}
-
-const Title = () => {
-    return (
-        <div style={styles.titleBox}>
-            <text style={styles.title}>Bem vindo ao site de Apontamento</text>
-        </div>
     );
 }
 
@@ -79,7 +72,6 @@ const NewUser = () => {
 }
 
 const newUserClick = () => {
-
     alert("Novo usuário não implementado");
 }
 
