@@ -1,154 +1,17 @@
 import React, { useState } from 'react';
-import { ReactComponent as Logo } from './../logo.svg';
 import { Redirect } from 'react-router-dom';
-import { Title } from '../components/title';
 
 function Login() {
-    const [logged, setLogged] = useState(false);
-    const [userName, setUserName] = useState("");
-
-    const loginClick = () => {
-        if (userName != '' && userName != null) {
-            if (userName.toLowerCase() === 'admin') {
-                setLogged(true);
-            } else {
-                alert('Usuário não encontrado!')
-            }
-        }
-    }
-
-    const handleOnChange = (input) => {
-        setUserName(input.target.value)
+    const urlParams = new URLSearchParams(window.location.search);
+    const id_token = urlParams.get('id_token');
+    if (!id_token) {
+        window.location.assign('https://apontamento.auth.us-east-1.amazoncognito.com/login?client_id=2bk2he7s7lgmaovtrtc17bat9t&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://master.d1t6bh9zd2tcsz.amplifyapp.com/');
     }
 
     return (
-        <div style={styles.panel}>
-            <Logo style={styles.icon} />
-            <Title title={"Bem vindo ao site de Apontamento"} />
-            <User onChange={handleOnChange} />
-            <Password />
-            <LoginButton onClick={loginClick} />
-            <NewUser />
-            <Credits />
-            {logged && <Redirect to="/report" />}
-        </div >
+        <Redirect to="/report" />
     );
 }
-
-const User = ({ onChange }) => {
-    return (
-        <div style={styles.inputBox}>
-            <text style={styles.label}>Usuário</text>
-            <input type="text" onChange={onChange} style={styles.inputText} ></input>
-        </div>
-    );
-}
-
-const Password = () => {
-    return (
-        <div style={styles.inputBox}>
-            <text style={styles.label}>Senha</text>
-            <input type="password" style={styles.inputText}></input>
-        </div>
-    );
-}
-
-
-const Credits = () => {
-    return (
-        <div style={styles.credit}>
-            Ícones feitos por <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/br/"
-                title="Flaticon">www.flaticon.com</a>
-        </div>
-    );
-}
-
-const LoginButton = ({ onClick }) => {
-    return <button style={styles.button} onClick={onClick} >Entrar</button>;
-}
-
-const NewUser = () => {
-    return <a onClick={newUserClick} style={styles.newUser}>Criar Perfil de funcionário</a>;
-}
-
-const newUserClick = () => {
-    alert("Novo usuário não implementado");
-}
-
-
-
-
-const styles = {
-    panel: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        flex: 1,
-    },
-    title: {
-        color: "#FFFFFF",
-        fontSize: 30,
-        textAlign: "center",
-    },
-    titleBox: {
-        display: "flex",
-        flexDirection: "row",
-        marginBottom: 48,
-        alignItems: "center",
-        justifyContent: "center",
-        flexBasis: 0,
-    },
-    icon: {
-        width: 36,
-        height: 36,
-        marginBottom: 24,
-    },
-    label: {
-        color: "#FFFFFF",
-        marginBottom: 4,
-    },
-    inputBox: {
-        display: "flex",
-        flexDirection: "column",
-    },
-    inputText: {
-        backgroundColor: "#0d0f12",
-        appearance: "textfield",
-        color: "#FFFFFF",
-        height: 22,
-        minWidth: 200,
-        paddingTop: 8,
-        paddingBottom: 8,
-        paddingRight: 16,
-        paddingLeft: 16,
-        marginBottom: 24,
-        borderWidth: 1,
-        borderColor: "#FFFFFF55",
-        borderRadius: 2,
-    },
-    button: {
-        backgroundColor: "#0084bd",
-        color: "#FFE5E5",
-        height: 40,
-        minWidth: 232,
-        fontSize: 14,
-        marginBottom: 24,
-        borderWidth: 0,
-        borderRadius: 2,
-    },
-    newUser: {
-        cursor: 'pointer',
-        color: "#2ea0d6",
-        minWidth: 232,
-        textAlign: "center",
-    },
-    credit: {
-        color: "#FFFFFF",
-        fontSize: 12,
-        textAlign: "center",
-        marginTop: 100,
-    }
-};
 
 export default Login;
 

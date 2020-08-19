@@ -34,7 +34,7 @@ function Report() {
     //     }).catch(console.log)
 
     return (
-        
+
         <div style={styles.list}>
             <Title title={"Relatório Geral"} />
             {employees.map((timeEntry) => (
@@ -53,9 +53,9 @@ const Entries = (entries) => {
         {entries.entries.map((timeEntry) => (
             <div style={styles.row}>
                 <text style={styles.hour}>{timeEntry.start}</text>
-                <text style={styles.hour}>{timeEntry.end?timeEntry.end: "__:__"}</text>
+                <text style={styles.hour}>{timeEntry.end ? timeEntry.end : "__:__"}</text>
             </div>
-        ))};
+        ))}
     </div>
 
 };
