@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Login from './login/login';
 import Report from './report/report';
-import { BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import NotFoundPage from './404/404';
 
 const fakeAuth = {
@@ -27,13 +27,13 @@ function PrivateRoute({ children, ...rest }) {
         fakeAuth.isAuthenticated ? (
           children
         ) : (
-          <Redirect
-            to={{
-              pathname: "/",
-              state: { from: location }
-            }}
-          />
-        )
+            <Redirect
+              to={{
+                pathname: "/",
+                state: { from: location }
+              }}
+            />
+          )
       }
     />
   );
@@ -42,18 +42,16 @@ function PrivateRoute({ children, ...rest }) {
 
 
 function App() {
+
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={Login} />
+        <Route exact path="/" render={() => <Login search={window.location.search} />} />
         <Route exact path="/404" component={NotFoundPage} />
         <Route exact path="/report" component={Report} />
-        {/* <PrivateRoute path="/report">
-          <Report />
-        </PrivateRoute> */}
         <Redirect to="/404"></Redirect>
       </Switch>
-    </Router>
+    </Router >
   );
 }
 
