@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 function Login(props) {
+    console.log("debug location: " + JSON.stringify(props.location));
+    console.log("debug search: " + JSON.stringify(props.location.search));
+    console.log("debug hash: " + JSON.stringify(props.location.hash));
+    alert("wait");
     const urlParams = new URLSearchParams(props.location.search);
     const id_token = urlParams.get('id_token');
 
