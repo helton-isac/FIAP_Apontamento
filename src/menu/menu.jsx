@@ -8,7 +8,26 @@ function Menu(props) {
     const sign_in = 'ENTRAR';
     const sign_out = 'SAIR';
     const idToken = extractParam(hashParams, 'id_token');
+    const expiresIn = extractParam(hashParams, 'expires_in');
+    const tokenType = extractParam(hashParams, 'token_type');
     const [loginButtonText, setLoginButtonText] = useState(idToken ? sign_out : sign_in);
+
+    function parseJwt(token) {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(JSON.stringify(jsonPayload));
+    };
+
+    if (idToken) {
+        const user = JSON.parse(parseJwt(idToken));
+
+        loginButtonText = user["cognito:username"];
+    }
+
 
     const onLoginClick = () => {
         if (loginButtonText === sign_in) {
