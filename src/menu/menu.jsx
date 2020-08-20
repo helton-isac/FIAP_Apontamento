@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { ReactComponent as Logo } from './../logo.svg';
 import LogoWithName from '../components/logoWithName';
+import Menus from '../components/menus';
 
 function Menu(props) {
 
+
     const hashParams = props.location.hash.split('&');
-    const sign_in = 'ENTRAR';
-    const sign_out = 'SAIR';
+    const sign_in = 'Entrar';
+    const sign_out = 'Sair';
     const idToken = extractParam(hashParams, 'id_token');
     const expiresIn = extractParam(hashParams, 'expires_in');
     const tokenType = extractParam(hashParams, 'token_type');
@@ -21,24 +23,24 @@ function Menu(props) {
 
         return JSON.parse(JSON.stringify(jsonPayload));
     };
+    const [user, setUser] = useState(JSON.parse(parseJwt(idToken)));
 
-    const user = JSON.parse(parseJwt(idToken));
+    const login = () => {
+        window.location.assign('https://apontamento.auth.us-east-1.amazoncognito.com/login?client_id=2bk2he7s7lgmaovtrtc17bat9t&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://master.d1t6bh9zd2tcsz.amplifyapp.com/');
+    }
 
-    const [loginButtonText, setLoginButtonText] = useState(idToken ? user["cognito:username"] : sign_in);
-
-    const onLoginClick = () => {
-        if (loginButtonText === sign_in) {
-            window.location.assign('https://apontamento.auth.us-east-1.amazoncognito.com/login?client_id=2bk2he7s7lgmaovtrtc17bat9t&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://master.d1t6bh9zd2tcsz.amplifyapp.com/');
-        } else {
-            setLoginButtonText(sign_in);
-        }
+    const logout = () => {
+        setUser(null);
     }
 
     return (
         <div style={styles.page}>
             <div style={styles.header}>
                 <LogoWithName />
-                <text style={styles.login} onClick={onLoginClick} >{loginButtonText}</text>
+                <Menus
+                    userName={user ? user["cognito:username"] : null}
+                    loginText={user ? sign_out : sign_in}
+                    onLoginClick={user ? logout : login} />
             </div>
             <text style={styles.text}>Exemplo de um sistema de ponto simples criado utilizando serviços AWS.</text>
         </div>
@@ -81,17 +83,6 @@ const styles = {
         paddingTop: 35,
         paddingBottom: 35,
         alignSelf: "center",
-    },
-    login: {
-        color: "#FFFFFF",
-        fontSize: 14,
-        fontWeight: 700,
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingTop: 35,
-        paddingBottom: 35,
-        alignSelf: "center",
-        cursor: 'pointer',
     },
     icon: {
         width: 36,
