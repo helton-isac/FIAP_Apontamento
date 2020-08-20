@@ -10,9 +10,9 @@ function Menu(props) {
     const idToken = extractParam(hashParams, 'id_token');
     const expiresIn = extractParam(hashParams, 'expires_in');
     const tokenType = extractParam(hashParams, 'token_type');
-    const [loginButtonText, setLoginButtonText] = useState(idToken ? sign_out : sign_in);
 
     function parseJwt(token) {
+        if (!token) return null;
         var base64Url = token.split('.')[1];
         var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
         var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
@@ -22,12 +22,9 @@ function Menu(props) {
         return JSON.parse(JSON.stringify(jsonPayload));
     };
 
-    if (idToken) {
-        const user = JSON.parse(parseJwt(idToken));
+    const user = JSON.parse(parseJwt(idToken));
 
-        loginButtonText = user["cognito:username"];
-    }
-
+    const [loginButtonText, setLoginButtonText] = useState(idToken ? user["cognito:username"] : sign_in);
 
     const onLoginClick = () => {
         if (loginButtonText === sign_in) {
