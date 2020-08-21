@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 function Menus(props) {
     return (
         <div style={styles.container}>
-            {props.userName && <text style={styles.login}>{props.userName}</text>}
+            {props.isEmployee && <text style={styles.action} onClick={props.onTrackingActionSelected}>Registrar Trabalho</text>}
+            {props.userName && <text style={styles.user}>{props.userName}</text>}
             {props.loginText && <text style={styles.login} onClick={props.onLoginClick}>{props.loginText}</text>}
         </div>
     );
@@ -27,6 +28,16 @@ const styles = {
         cursor: 'pointer',
     },
     user: {
+        color: "#FFFFFF",
+        fontSize: 14,
+        fontWeight: 700,
+        paddingLeft: 40,
+        paddingRight: 20,
+        paddingTop: 35,
+        paddingBottom: 35,
+        alignSelf: "center",
+    },
+    action: {
         color: "#FFFFFF",
         fontSize: 14,
         fontWeight: 700,

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ReactComponent as Logo } from './../logo.svg';
 import LogoWithName from '../components/logoWithName';
 import Menus from '../components/menus';
+import TimeTracking from '../components/timeTrackingPanel';
 
 function Menu(props) {
 
@@ -24,6 +25,7 @@ function Menu(props) {
         return JSON.parse(JSON.stringify(jsonPayload));
     };
     const [user, setUser] = useState(JSON.parse(parseJwt(idToken)));
+    const [showTimeTracking, setShowTimeTracking] = useState(false);
 
     const login = () => {
         window.location.assign('https://apontamento.auth.us-east-1.amazoncognito.com/login?client_id=2bk2he7s7lgmaovtrtc17bat9t&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://master.d1t6bh9zd2tcsz.amplifyapp.com/');
@@ -40,9 +42,12 @@ function Menu(props) {
                 <Menus
                     userName={user ? user["cognito:username"] : null}
                     loginText={user ? sign_out : sign_in}
-                    onLoginClick={user ? logout : login} />
+                    onLoginClick={user ? logout : login}
+                    isEmployee={user ? true : false}
+                    onTrackingActionSelected={() => setShowTimeTracking(true)} />
             </div>
-            <text style={styles.text}>Exemplo de um sistema de ponto simples criado utilizando serviços AWS.</text>
+            {!showTimeTracking && <text style={styles.text}>Exemplo de um sistema de ponto simples criado utilizando serviços AWS.</text>}
+            {showTimeTracking && <TimeTracking />}
         </div>
     );
 }
