@@ -50,11 +50,11 @@ function Menu(props) {
 
 function teste() {
 
-    // fetch('https://81mmi65fab.execute-api.us-east-1.amazonaws.com/default/lambda-microservice?TableName=time_entry')
-    // .then(res => res.json())
-    // .then((data) => {
-    //     setEmployees(data.Items);
-    // }).catch(console.log)
+    fetch('https://81mmi65fab.execute-api.us-east-1.amazonaws.com/default/lambda-microservice?TableName=time_entry')
+    .then(res => res.json())
+    .then((data) => {
+        setEmployees(data.Items);
+    }).catch(console.log)
 
     fetch("https://81mmi65fab.execute-api.us-east-1.amazonaws.com/default/lambda-microservice",
         {
