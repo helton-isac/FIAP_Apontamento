@@ -22,7 +22,7 @@ function Menu(props) {
     }
 
     teste();
-    
+
     const login = () => {
         window.location.assign('https://apontamento.auth.us-east-1.amazoncognito.com/login?client_id=2bk2he7s7lgmaovtrtc17bat9t&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://master.d1t6bh9zd2tcsz.amplifyapp.com/');
     }
@@ -58,6 +58,9 @@ function teste() {
 
     fetch("https://81mmi65fab.execute-api.us-east-1.amazonaws.com/default/lambda-microservice", {
         "method": "POST",
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        },
         "body": JSON.stringify({
             login: "Um Teste",
             name: "Outro Test"
