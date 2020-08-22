@@ -2,8 +2,8 @@ const service = 'https://81mmi65fab.execute-api.us-east-1.amazonaws.com/default/
 
 export default class DynamoUtils {
     static getAllUsers(callback) {
-        fetch(`${service}?TableName=time_entry`, {
-
+        fetch(`${service}?TableName=employee`, {
+            mode: 'no-cors',
         })
             .then(res => res.json())
             .then((data) => {
