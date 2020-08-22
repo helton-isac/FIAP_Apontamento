@@ -2,28 +2,36 @@ import React, { useState } from 'react';
 import LogoWithName from '../components/logoWithName';
 import Menus from '../components/menus';
 import TimeTracking from '../components/timeTrackingPanel';
+import DynamoUtils from '../utils/dynamoUtils';
+import JWTUtils from '../utils/jwtUtils';
+
+const SIGN_IN = 'Entrar';
+const SIGN_OUT = 'Sair';
 
 function Menu(props) {
 
     const hashParams = props.location.hash.split('&');
-    //const hashParams = ["#id_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2duaXRvOnVzZXJuYW1lIjoiSGVsdG9uIE9sYSJ9"];
-    const sign_in = 'Entrar';
-    const sign_out = 'Sair';
-    const idToken = extractParam(hashParams, 'id_token');
-    // TODO: It is necessary to revalidate the token sometime.
-    // const expiresIn = extractParam(hashParams, 'expires_in');
-    // const tokenType = extractParam(hashParams, 'token_type');
+    const idToken = JWTUtils.extractParam(hashParams, 'id_token');
 
-    const [user, setUser] = useState(JSON.parse(parseJwt(idToken)));
+    const [user, setUser] = useState(JSON.parse(JWTUtils.parseJwt(idToken)));
     const [showTimeTracking, setShowTimeTracking] = useState(false);
 
     if (user) {
         window.history.replaceState(null, null, ' ');
+        const login = user["cognito:username"];
+        if (login) {
+            DynamoUtils.getAllUsers(
+                (data) => {
+                    if (!data.find(element => element.login === login)) {
+                        DynamoUtils.postUser(login)
+                    }
+                });
+        }
     }
 
-    teste();
-
     const login = () => {
+        // Test
+        // window.location.assign('http://localhost:3000/#id_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2duaXRvOnVzZXJuYW1lIjoiSGVsdG9uIE9sYSJ9');
         window.location.assign('https://apontamento.auth.us-east-1.amazoncognito.com/login?client_id=2bk2he7s7lgmaovtrtc17bat9t&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://master.d1t6bh9zd2tcsz.amplifyapp.com/');
     }
 
@@ -37,7 +45,7 @@ function Menu(props) {
                 <LogoWithName />
                 <Menus
                     userName={user ? user["cognito:username"] : null}
-                    loginText={user ? sign_out : sign_in}
+                    loginText={user ? SIGN_OUT : SIGN_IN}
                     onLoginClick={user ? logout : login}
                     isEmployee={user ? true : false}
                     onTrackingActionSelected={() => setShowTimeTracking(true)} />
@@ -47,62 +55,6 @@ function Menu(props) {
         </div>
     );
 }
-
-function teste() {
-
-    fetch('https://81mmi65fab.execute-api.us-east-1.amazonaws.com/default/lambda-microservice?TableName=time_entry')
-    .then(res => res.json())
-    .then((data) => {
-        setEmployees(data.Items);
-    }).catch(console.log)
-
-    fetch("https://81mmi65fab.execute-api.us-east-1.amazonaws.com/default/lambda-microservice",
-        {
-            method: "POST",
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-            },
-            mode: 'no-cors',
-            body: JSON.stringify(
-                {
-                    "TableName": "employee",
-                    "Item": {
-                        "login": "CaioXablau50",
-                        "test": "Caio"
-                    }
-                }
-            )
-        })
-        .then(response => response.json())
-        .then(response => {
-            console.log(response);
-        })
-        .catch(err => { console.log(err); });
-}
-
-function extractParam(params, param) {
-    for (var i = 0; i < params.length; i++) {
-        if (params[i].indexOf(param) > 0) {
-            return params[i].replace('#', '').replace(`${param}=`, '');
-        }
-    }
-    return null;
-}
-
-function parseJwt(token) {
-    if (!token) return null;
-    try {
-        var base64Url = token.split('.')[1];
-        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-
-        return JSON.parse(JSON.stringify(jsonPayload));
-    } catch (e) {
-        return null;
-    }
-};
 
 const styles = {
     page: {
