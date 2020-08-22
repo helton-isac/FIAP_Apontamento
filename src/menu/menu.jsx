@@ -60,14 +60,14 @@ function teste() {
         {
             method: "POST",
             headers: {
-                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Origin': '*',
             },
             body: JSON.stringify(
                 {
                     "TableName": "employee",
                     "Item": {
-                        "login": "Helton30",
-                        "test": "Test30"
+                        "login": "CaioXablau2",
+                        "test": "Caio"
                     }
                 }
             )
