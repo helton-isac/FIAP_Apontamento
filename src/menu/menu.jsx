@@ -6,6 +6,7 @@ import TimeTracking from '../components/timeTrackingPanel';
 function Menu(props) {
 
     const hashParams = props.location.hash.split('&');
+    //const hashParams = ["#id_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2duaXRvOnVzZXJuYW1lIjoiSGVsdG9uIE9sYSJ9"];
     const sign_in = 'Entrar';
     const sign_out = 'Sair';
     const idToken = extractParam(hashParams, 'id_token');
