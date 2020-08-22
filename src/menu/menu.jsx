@@ -59,6 +59,9 @@ function teste() {
     fetch("https://81mmi65fab.execute-api.us-east-1.amazonaws.com/default/lambda-microservice",
         {
             method: "POST",
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            },
             body: JSON.stringify(
                 {
                     "TableName": "employee",
