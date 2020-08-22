@@ -19,9 +19,11 @@ function Menu(props) {
     if (user) {
         window.history.replaceState(null, null, ' ');
         const login = user["cognito:username"];
+        console.log(`apontamento: login-${login}`)
         if (login) {
             DynamoUtils.getAllUsers(
                 (data) => {
+                    console.log(`apontamento: data-${JSON.stringify(data)}`)
                     if (!data.find(element => element.login === login)) {
                         DynamoUtils.postUser(login)
                     }

@@ -5,8 +5,12 @@ export default class DynamoUtils {
         fetch(`${service}?TableName=employee`, {
             mode: 'no-cors',
         })
-            .then(res => res.json())
+            .then(res => {
+                console.log(`apontamento: getAllUsersResponse1-${JSON.stringify(res)}`)
+                return res.json()
+            })
             .then((data) => {
+                console.log(`apontamento: getAllUsersResponse2-${JSON.stringify(data)}`)
                 callback(data.Items);
             }).catch(console.log)
     }
@@ -30,6 +34,7 @@ export default class DynamoUtils {
             })
             .then(response => response.json())
             .then(response => {
+                console.log(`apontamento: postUserResponse-${JSON.stringify(response)}`)
                 console.log(response);
             })
             .catch(err => { console.log(err); });
