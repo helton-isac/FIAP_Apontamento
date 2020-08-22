@@ -56,16 +56,19 @@ function teste() {
     //     setEmployees(data.Items);
     // }).catch(console.log)
 
-    fetch("https://81mmi65fab.execute-api.us-east-1.amazonaws.com/default/lambda-microservice", {
-        "method": "POST",
-        headers: {
-            'Access-Control-Allow-Origin': '*'
-        },
-        "body": JSON.stringify({
-            login: "Um Teste",
-            name: "Outro Test"
+    fetch("https://81mmi65fab.execute-api.us-east-1.amazonaws.com/default/lambda-microservice",
+        {
+            method: "POST",
+            body: JSON.stringify(
+                {
+                    "TableName": "employee",
+                    "Item": {
+                        "login": "Helton30",
+                        "test": "Test30"
+                    }
+                }
+            )
         })
-    })
         .then(response => response.json())
         .then(response => {
             console.log(response);
