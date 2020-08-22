@@ -21,6 +21,8 @@ function Menu(props) {
         window.history.replaceState(null, null, ' ');
     }
 
+    teste();
+    
     const login = () => {
         window.location.assign('https://apontamento.auth.us-east-1.amazoncognito.com/login?client_id=2bk2he7s7lgmaovtrtc17bat9t&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://master.d1t6bh9zd2tcsz.amplifyapp.com/');
     }
@@ -46,6 +48,28 @@ function Menu(props) {
     );
 }
 
+function teste() {
+
+    // fetch('https://81mmi65fab.execute-api.us-east-1.amazonaws.com/default/lambda-microservice?TableName=time_entry')
+    // .then(res => res.json())
+    // .then((data) => {
+    //     setEmployees(data.Items);
+    // }).catch(console.log)
+
+    fetch("https://81mmi65fab.execute-api.us-east-1.amazonaws.com/default/lambda-microservice", {
+        "method": "POST",
+        "body": JSON.stringify({
+            login: "Um Teste",
+            name: "Outro Test"
+        })
+    })
+        .then(response => response.json())
+        .then(response => {
+            console.log(response);
+        })
+        .catch(err => { console.log(err); });
+}
+
 function extractParam(params, param) {
     for (var i = 0; i < params.length; i++) {
         if (params[i].indexOf(param) > 0) {
@@ -57,13 +81,13 @@ function extractParam(params, param) {
 
 function parseJwt(token) {
     if (!token) return null;
-    try{
+    try {
         var base64Url = token.split('.')[1];
         var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
         var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
         }).join(''));
-    
+
         return JSON.parse(JSON.stringify(jsonPayload));
     } catch (e) {
         return null;
