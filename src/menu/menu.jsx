@@ -62,11 +62,12 @@ function teste() {
             headers: {
                 'Access-Control-Allow-Origin': '*',
             },
+            mode: 'no-cors',
             body: JSON.stringify(
                 {
                     "TableName": "employee",
                     "Item": {
-                        "login": "CaioXablau2",
+                        "login": "CaioXablau50",
                         "test": "Caio"
                     }
                 }
