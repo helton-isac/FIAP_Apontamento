@@ -3,6 +3,7 @@ import React from 'react';
 function Menus(props) {
     return (
         <div style={styles.container}>
+            {props.isAdmin && <div style={styles.action} onClick={props.onReportsClicks}>Relatórios</div>}
             {props.isEmployee && <div style={styles.action} onClick={props.onUserReportClicks}>Meus Apontamentos</div>}
             {props.isEmployee && <div style={styles.action} onClick={props.onTrackingActionSelected}>Registrar Trabalho</div>}
             {props.userName && <div style={styles.user}>{props.userName}</div>}

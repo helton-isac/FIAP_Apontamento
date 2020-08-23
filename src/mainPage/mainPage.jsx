@@ -5,13 +5,15 @@ import TimeTracking from '../components/timeTrackingPanel';
 import DynamoUtils from '../utils/dynamoUtils';
 import JWTUtils from '../utils/jwtUtils';
 import UserReport from '../components/userReport';
+import Report from '../components/report';
 
 const SIGN_IN = 'Entrar';
 const SIGN_OUT = 'Sair';
 const screen = {
     Home: "HOME",
     TimeTracking: "TimeTracking",
-    UserReport: "UserReport"
+    UserReport: "UserReport",
+    Reports: "Reports"
 }
 
 function MainPage(props) {
@@ -21,6 +23,7 @@ function MainPage(props) {
 
     const [user, setUser] = useState(JSON.parse(JWTUtils.parseJwt(idToken)));
     const [activeScreen, setActiveScreen] = useState("HOME");
+    const [isAdmin, setIsAdmin] = useState(false);
 
     if (user) {
         window.history.replaceState(null, null, ' ');
@@ -28,8 +31,11 @@ function MainPage(props) {
         if (login) {
             DynamoUtils.getAllUsers(
                 (data) => {
-                    if (!data.find(element => element.login === login)) {
+                    const loggedUser = data.find(element => element.login === login);
+                    if (!loggedUser) {
                         DynamoUtils.postUser(login)
+                    } else {
+                        setIsAdmin(data && loggedUser.role === 'admin');
                     }
                 });
         }
@@ -41,6 +47,7 @@ function MainPage(props) {
 
     const logout = () => {
         setUser(null);
+        setIsAdmin(false);
         setActiveScreen(screen.Home);
     }
 
@@ -53,13 +60,16 @@ function MainPage(props) {
                     loginText={user ? SIGN_OUT : SIGN_IN}
                     onLoginClick={user ? logout : login}
                     isEmployee={user ? true : false}
+                    isAdmin={isAdmin}
                     onTrackingActionSelected={() => setActiveScreen(screen.TimeTracking)}
                     onUserReportClicks={() => setActiveScreen(screen.UserReport)}
+                    onReportsClicks={() => setActiveScreen(screen.Reports)}
                 />
             </div>
             {activeScreen === screen.Home && <div style={styles.text}>Exemplo de um sistema de ponto simples criado utilizando serviços AWS.</div>}
             {activeScreen === screen.TimeTracking && <TimeTracking login={user ? user["cognito:username"] : null} />}
             {activeScreen === screen.UserReport && <UserReport login={user ? user["cognito:username"] : null} />}
+            {activeScreen === screen.Reports && <Report login={user ? user["cognito:username"] : null} />}
         </div>
     );
 }
