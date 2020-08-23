@@ -5,7 +5,6 @@ import Loading from './loading';
 
 function TimeTracking(props) {
 
-
     const [timeEntries, setTimeEntries] = useState(null);
     const today = new Date();
     const ftDate = Utils.dateFormatted(today);
@@ -59,8 +58,8 @@ function TimeTracking(props) {
                 <div style={styles.title}>{"Período"}</div>
             </div>
             <div style={styles.row}>
-                <div style={styles.columnTitle}>{"INÍCIO"}</div>
-                <div style={styles.columnTitle}>{"FIM"}</div>
+                <div style={styles.title}>{"Início"}</div>
+                <div style={styles.title}>{"Fim"}</div>
             </div>
             {timeEntries.map((timeEntry) => (
                 <div key={++id} style={styles.row}>
@@ -79,13 +78,12 @@ const styles = {
     },
     text: {
         color: "#FFFFFF",
-        fontSize: 14,
+        fontSize: 20,
         fontWeight: 700,
         paddingTop: 35,
         paddingBottom: 35,
         alignSelf: "center",
         textAlign: "center",
-        cursor: 'pointer',
     },
     button: {
         minWidth: "260px",
@@ -129,21 +127,14 @@ const styles = {
         width: 100,
         textAlign: "center",
     },
-    columnTitle: {
-        color: "#FFFFFF",
-        marginLeft: 20,
-        marginRight: 20,
-        width: 100,
-        textAlign: "center",
-        fontSize: "16px",
-    },
     title: {
         color: "#FFFFFF",
         marginLeft: 20,
         marginRight: 20,
         width: 100,
         textAlign: "center",
-        fontSize: "20px",
+        fontSize: 20,
+        fontWeight: 700,
     }
 }
 

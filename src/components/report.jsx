@@ -10,10 +10,11 @@ function Report(props) {
         DynamoUtils.getAllEntries((data) => {
 
             function compare(a, b) {
-                if (a.date < b.date) {
+
+                if (a.entries[0].dateId < b.entries[0].dateId) {
                     return -1;
                 }
-                if (a.date > b.date) {
+                if (a.entries[0].dateId > b.entries[0].dateId) {
                     return 1;
                 }
                 return 0;
@@ -72,7 +73,6 @@ const styles = {
         width: 100,
         textAlign: "center",
         fontSize: 20,
-        cursor: 'pointer',
         fontWeight: 700,
     },
     row: {

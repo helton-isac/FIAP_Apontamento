@@ -61,7 +61,6 @@ const styles = {
         width: 100,
         textAlign: "center",
         fontSize: 20,
-        cursor: 'pointer',
         fontWeight: 700,
     },
     row: {
