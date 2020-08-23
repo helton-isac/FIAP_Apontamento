@@ -8,7 +8,7 @@ import JWTUtils from '../utils/jwtUtils';
 const SIGN_IN = 'Entrar';
 const SIGN_OUT = 'Sair';
 
-function Menu(props) {
+function MainPage(props) {
 
     const hashParams = props.location.hash.split('&');
     const idToken = JWTUtils.extractParam(hashParams, 'id_token');
@@ -103,6 +103,6 @@ const styles = {
 }
 
 
-export default Menu;
+export default MainPage;
 
 
