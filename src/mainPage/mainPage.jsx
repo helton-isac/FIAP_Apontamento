@@ -35,6 +35,7 @@ function MainPage(props) {
 
     const logout = () => {
         setUser(null);
+        setShowTimeTracking(false);
     }
 
     return (
