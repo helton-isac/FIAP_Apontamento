@@ -19,11 +19,9 @@ function MainPage(props) {
     if (user) {
         window.history.replaceState(null, null, ' ');
         const login = user["cognito:username"];
-        console.log(`apontamento: login-${login}`)
         if (login) {
             DynamoUtils.getAllUsers(
                 (data) => {
-                    console.log(`apontamento: data-${JSON.stringify(data)}`)
                     if (!data.find(element => element.login === login)) {
                         DynamoUtils.postUser(login)
                     }
@@ -32,8 +30,6 @@ function MainPage(props) {
     }
 
     const login = () => {
-        // Test
-        // window.location.assign('http://localhost:3000/#id_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2duaXRvOnVzZXJuYW1lIjoiSGVsdG9uIE9sYSJ9');
         window.location.assign('https://apontamento.auth.us-east-1.amazoncognito.com/login?client_id=2bk2he7s7lgmaovtrtc17bat9t&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https://master.d1t6bh9zd2tcsz.amplifyapp.com/');
     }
 
@@ -53,7 +49,7 @@ function MainPage(props) {
                     onTrackingActionSelected={() => setShowTimeTracking(true)} />
             </div>
             {!showTimeTracking && <div style={styles.text}>Exemplo de um sistema de ponto simples criado utilizando serviços AWS.</div>}
-            {showTimeTracking && <TimeTracking />}
+            {showTimeTracking && <TimeTracking login={user ? user["cognito:username"] : null}/>}
         </div>
     );
 }

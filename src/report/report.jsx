@@ -25,13 +25,6 @@ function Report() {
         }
     ]);
 
-    //https://81mmi65fab.execute-api.us-east-1.amazonaws.com/default/lambda-microservice?TableName=time_entry
-    // fetch('https://81mmi65fab.execute-api.us-east-1.amazonaws.com/default/lambda-microservice?TableName=time_entry')
-    //     .then(res => res.json())
-    //     .then((data) => {
-    //         setEmployees(data.Items);
-    //     }).catch(console.log)
-
     return (
 
         <div style={styles.list}>

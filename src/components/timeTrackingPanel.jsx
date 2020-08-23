@@ -1,25 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import DynamoUtils from '../utils/dynamoUtils';
 
 function TimeTracking(props) {
 
 
     const [timeEntries, setTimeEntries] = useState([]);
     const today = new Date();
+    const ftDate = dateFormatted(today);
+
+    useEffect(() => {
+        DynamoUtils.getAllEntries((data) => {
+            const todayEntry = data.find(element => element.date === dateFormatted(new Date()));
+
+            if (todayEntry) {
+                setTimeEntries(todayEntry.entries);
+            }
+        })
+    }, [])
+
 
     const register = () => {
-        const today = new Date();
         const hours = ("0" + today.getHours()).slice(-2);
         const minutes = ("0" + today.getMinutes()).slice(-2);
         const now = `${hours}:${minutes}`;
+
         if (timeEntries.length === 0) {
-            setTimeEntries([{ start: now }]);
+            const newTimeEntry = [{ dateId: today.getTime(), start: now }];
+            DynamoUtils.postTimeEntry(props.login, ftDate, newTimeEntry);
+            setTimeEntries(newTimeEntry);
         } else {
             const lastIndex = timeEntries.length;
             if (timeEntries[lastIndex - 1].end) {
-                timeEntries.push({ start: now });
+                timeEntries.push({ dateId: today.getTime(), start: now });
             } else {
                 timeEntries[lastIndex - 1].end = now;
             }
+            DynamoUtils.postTimeEntry(props.login, ftDate, timeEntries);
             setTimeEntries([...timeEntries]);
         }
     }
@@ -31,9 +47,11 @@ function TimeTracking(props) {
         return `${day}/${month}/${year}`;
     }
 
+    let id = 0;
+
     return (
         <div style={styles.panel}>
-            <div style={styles.text}>{dateFormatted(today)}</div>
+            <div style={styles.text}>{ftDate}</div>
             <button style={styles.button} onClick={register} >Marcar Ponto</button>
             <div style={styles.row}>
                 <div style={styles.title}>{"Período"}</div>
@@ -43,7 +61,7 @@ function TimeTracking(props) {
                 <div style={styles.columnTitle}>{"FIM"}</div>
             </div>
             {timeEntries.map((timeEntry) => (
-                <div style={styles.row}>
+                <div key={++id} style={styles.row}>
                     <div style={styles.hour}>{timeEntry.start}</div>
                     <div style={styles.hour}>{timeEntry.end ? timeEntry.end : "__:__"}</div>
                 </div>
