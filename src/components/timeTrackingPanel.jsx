@@ -1,24 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import DynamoUtils from '../utils/dynamoUtils';
+import Utils from '../utils/utils';
+import Loading from './loading';
 
 function TimeTracking(props) {
 
 
-    const [timeEntries, setTimeEntries] = useState([]);
+    const [timeEntries, setTimeEntries] = useState(null);
     const today = new Date();
-    const ftDate = dateFormatted(today);
+    const ftDate = Utils.dateFormatted(today);
 
-    // eslint-disable-next-line
     useEffect(() => {
         DynamoUtils.getAllEntries((data) => {
-            const todayEntry = data.find(element => element.login === props.login && element.date === dateFormatted(new Date()));
+            const todayEntry = data.find(
+                element => element.login === props.login
+                    && element.date === Utils.dateFormatted(new Date()));
 
             if (todayEntry) {
                 setTimeEntries(todayEntry.entries);
             }
         })
-    }, [])
+    }, [props.login])
 
+
+    if (!timeEntries) {
+        return <Loading />
+    }
 
     const register = () => {
         const today = new Date();
@@ -40,13 +47,6 @@ function TimeTracking(props) {
             DynamoUtils.postTimeEntry(props.login, ftDate, timeEntries);
             setTimeEntries([...timeEntries]);
         }
-    }
-
-    function dateFormatted(date) {
-        const day = ("0" + date.getDate().toString()).slice(-2);
-        const month = ("0" + (date.getMonth() + 1).toString()).slice(-2);
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
     }
 
     let id = 0;

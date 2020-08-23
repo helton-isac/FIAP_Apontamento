@@ -4,9 +4,15 @@ import Menus from '../components/menus';
 import TimeTracking from '../components/timeTrackingPanel';
 import DynamoUtils from '../utils/dynamoUtils';
 import JWTUtils from '../utils/jwtUtils';
+import UserReport from '../components/userReport';
 
 const SIGN_IN = 'Entrar';
 const SIGN_OUT = 'Sair';
+const screen = {
+    Home: "HOME",
+    TimeTracking: "TimeTracking",
+    UserReport: "UserReport"
+}
 
 function MainPage(props) {
 
@@ -14,7 +20,7 @@ function MainPage(props) {
     const idToken = JWTUtils.extractParam(hashParams, 'id_token');
 
     const [user, setUser] = useState(JSON.parse(JWTUtils.parseJwt(idToken)));
-    const [showTimeTracking, setShowTimeTracking] = useState(false);
+    const [activeScreen, setActiveScreen] = useState("HOME");
 
     if (user) {
         window.history.replaceState(null, null, ' ');
@@ -35,7 +41,7 @@ function MainPage(props) {
 
     const logout = () => {
         setUser(null);
-        setShowTimeTracking(false);
+        setActiveScreen(screen.Home);
     }
 
     return (
@@ -47,10 +53,13 @@ function MainPage(props) {
                     loginText={user ? SIGN_OUT : SIGN_IN}
                     onLoginClick={user ? logout : login}
                     isEmployee={user ? true : false}
-                    onTrackingActionSelected={() => setShowTimeTracking(true)} />
+                    onTrackingActionSelected={() => setActiveScreen(screen.TimeTracking)}
+                    onUserReportClicks={() => setActiveScreen(screen.UserReport)}
+                />
             </div>
-            {!showTimeTracking && <div style={styles.text}>Exemplo de um sistema de ponto simples criado utilizando serviços AWS.</div>}
-            {showTimeTracking && <TimeTracking login={user ? user["cognito:username"] : null}/>}
+            {activeScreen === screen.Home && <div style={styles.text}>Exemplo de um sistema de ponto simples criado utilizando serviços AWS.</div>}
+            {activeScreen === screen.TimeTracking && <TimeTracking login={user ? user["cognito:username"] : null} />}
+            {activeScreen === screen.UserReport && <UserReport login={user ? user["cognito:username"] : null} />}
         </div>
     );
 }
