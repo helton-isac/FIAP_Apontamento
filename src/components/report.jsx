@@ -5,6 +5,13 @@ import Loading from './loading';
 function Report(props) {
 
     const [allEntries, setAllEntries] = useState(null);
+    const [filteredEntries, setFilteredEntries] = useState(null);
+
+    const handleOnChange = (input) => {
+        const filteredUser = input.target.value;
+        const filteredData = allEntries.filter((entry) => { return entry.login.toLowerCase().indexOf(filteredUser.toLowerCase()) >= 0 });
+        setFilteredEntries(filteredData);
+    }
 
     useEffect(() => {
         DynamoUtils.getAllEntries((data) => {
@@ -22,11 +29,12 @@ function Report(props) {
             if (data) {
                 data.sort(compare)
                 setAllEntries(data);
+                setFilteredEntries(data);
             }
         })
     }, [props.login]);
 
-    if (!allEntries) {
+    if (!filteredEntries) {
         return <Loading />
     }
 
@@ -36,11 +44,14 @@ function Report(props) {
     return (
         <div style={styles.panel}>
             <div style={styles.row}>
+                <input type="text" placeholder="Filtrar usuário" onChange={handleOnChange} style={styles.inputText} ></input>
+            </div>
+            <div style={styles.row}>
                 <div style={styles.cellTitle}>Data</div>
                 <div style={styles.cellTitle}>Entrada</div>
                 <div style={styles.cellTitle}>Saida</div>
             </div>
-            {allEntries.map((entry) => (
+            {filteredEntries.map((entry) => (
                 <div key={++rowId} style={styles.row}>
                     <div style={styles.cellValue}>{entry.login}</div>
                     <div style={styles.cellValue}>{entry.date}</div>
@@ -65,7 +76,6 @@ const styles = {
         flexDirection: "column"
     },
     cellTitle: {
-        paddingTop: 35,
         paddingBottom: 35,
         color: "#FFFFFF",
         marginLeft: 20,
@@ -88,6 +98,22 @@ const styles = {
         marginRight: 20,
         width: 100,
         textAlign: "center",
+    },
+    inputText: {
+        backgroundColor: "#0d0f12",
+        appearance: "textfield",
+        color: "#FFFFFF",
+        height: 22,
+        minWidth: 200,
+        marginTop: 12,
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingRight: 16,
+        paddingLeft: 16,
+        marginBottom: 12,
+        borderWidth: 1,
+        borderColor: "#FFFFFF55",
+        borderRadius: 2,
     },
 }
 
