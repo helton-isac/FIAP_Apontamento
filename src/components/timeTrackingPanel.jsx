@@ -21,6 +21,7 @@ function TimeTracking(props) {
 
 
     const register = () => {
+        const today = new Date();
         const hours = ("0" + today.getHours()).slice(-2);
         const minutes = ("0" + today.getMinutes()).slice(-2);
         const now = `${hours}:${minutes}`;
