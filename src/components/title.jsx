@@ -3,7 +3,7 @@ import React from 'react';
 export const Title = ({title}) => {
     return (
         <div style={styles.titleBox}>
-            <text style={styles.title}>{title}</text>
+            <div style={styles.title}>{title}</div>
         </div>
     );
 }

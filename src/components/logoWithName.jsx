@@ -5,7 +5,7 @@ function LogoWithName(props) {
     return (
         <div style={styles.brand}>
             <Icon style={styles.icon} />
-            <text style={styles.title}>Apontamentos</text>
+            <div style={styles.title}>Apontamentos</div>
         </div>
     );
 }

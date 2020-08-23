@@ -52,7 +52,7 @@ function Menu(props) {
                     isEmployee={user ? true : false}
                     onTrackingActionSelected={() => setShowTimeTracking(true)} />
             </div>
-            {!showTimeTracking && <text style={styles.text}>Exemplo de um sistema de ponto simples criado utilizando serviços AWS.</text>}
+            {!showTimeTracking && <div style={styles.text}>Exemplo de um sistema de ponto simples criado utilizando serviços AWS.</div>}
             {showTimeTracking && <TimeTracking />}
         </div>
     );

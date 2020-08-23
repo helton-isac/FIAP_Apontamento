@@ -3,9 +3,9 @@ import React from 'react';
 function Menus(props) {
     return (
         <div style={styles.container}>
-            {props.isEmployee && <text style={styles.action} onClick={props.onTrackingActionSelected}>Registrar Trabalho</text>}
-            {props.userName && <text style={styles.user}>{props.userName}</text>}
-            {props.loginText && <text style={styles.login} onClick={props.onLoginClick}>{props.loginText}</text>}
+            {props.isEmployee && <div style={styles.action} onClick={props.onTrackingActionSelected}>Registrar Trabalho</div>}
+            {props.userName && <div style={styles.user}>{props.userName}</div>}
+            {props.loginText && <div style={styles.login} onClick={props.onLoginClick}>{props.loginText}</div>}
         </div>
     );
 }

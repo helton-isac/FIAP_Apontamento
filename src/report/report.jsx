@@ -38,8 +38,8 @@ function Report() {
             <Title title={"Relatório Geral"} />
             {employees.map((timeEntry) => (
                 <div style={styles.line}>
-                    <text style={styles.userName}>{timeEntry.login}</text>
-                    <text style={styles.date}>{timeEntry.date}</text>
+                    <div style={styles.userName}>{timeEntry.login}</div>
+                    <div style={styles.date}>{timeEntry.date}</div>
                     <Entries entries={timeEntry.entries} />
                 </div>
             ))}
@@ -51,8 +51,8 @@ const Entries = (entries) => {
     return <div style={styles.entryPanel}>
         {entries.entries.map((timeEntry) => (
             <div style={styles.row}>
-                <text style={styles.hour}>{timeEntry.start}</text>
-                <text style={styles.hour}>{timeEntry.end ? timeEntry.end : "__:__"}</text>
+                <div style={styles.hour}>{timeEntry.start}</div>
+                <div style={styles.hour}>{timeEntry.end ? timeEntry.end : "__:__"}</div>
             </div>
         ))}
     </div>

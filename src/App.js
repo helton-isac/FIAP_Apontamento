@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import Report from './report/report';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import NotFoundPage from './404/404';
 import Menu from './menu/menu';

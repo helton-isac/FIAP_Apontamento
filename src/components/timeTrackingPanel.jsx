@@ -33,19 +33,19 @@ function TimeTracking(props) {
 
     return (
         <div style={styles.panel}>
-            <text style={styles.text}>{dateFormatted(today)}</text>
+            <div style={styles.text}>{dateFormatted(today)}</div>
             <button style={styles.button} onClick={register} >Marcar Ponto</button>
             <div style={styles.row}>
-                <text style={styles.title}>{"Período"}</text>
+                <div style={styles.title}>{"Período"}</div>
             </div>
             <div style={styles.row}>
-                <text style={styles.columnTitle}>{"INÍCIO"}</text>
-                <text style={styles.columnTitle}>{"FIM"}</text>
+                <div style={styles.columnTitle}>{"INÍCIO"}</div>
+                <div style={styles.columnTitle}>{"FIM"}</div>
             </div>
             {timeEntries.map((timeEntry) => (
                 <div style={styles.row}>
-                    <text style={styles.hour}>{timeEntry.start}</text>
-                    <text style={styles.hour}>{timeEntry.end ? timeEntry.end : "__:__"}</text>
+                    <div style={styles.hour}>{timeEntry.start}</div>
+                    <div style={styles.hour}>{timeEntry.end ? timeEntry.end : "__:__"}</div>
                 </div>
             ))}
         </div>
