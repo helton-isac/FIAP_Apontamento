@@ -17,6 +17,8 @@ function TimeTracking(props) {
 
             if (todayEntry) {
                 setTimeEntries(todayEntry.entries);
+            } else {
+                setTimeEntries([]);
             }
         })
     }, [props.login])

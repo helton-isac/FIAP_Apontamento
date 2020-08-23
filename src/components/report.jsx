@@ -47,13 +47,14 @@ function Report(props) {
                 <input type="text" placeholder="Filtrar usuário" onChange={handleOnChange} style={styles.inputText} ></input>
             </div>
             <div style={styles.row}>
+                <div style={styles.nameTitle}>Nome</div>
                 <div style={styles.cellTitle}>Data</div>
                 <div style={styles.cellTitle}>Entrada</div>
                 <div style={styles.cellTitle}>Saida</div>
             </div>
             {filteredEntries.map((entry) => (
                 <div key={++rowId} style={styles.row}>
-                    <div style={styles.cellValue}>{entry.login}</div>
+                    <div style={styles.cellValueName}>{entry.login}</div>
                     <div style={styles.cellValue}>{entry.date}</div>
                     <div>
                         {entry.entries.map((timeEntry) => (
@@ -85,6 +86,16 @@ const styles = {
         fontSize: 20,
         fontWeight: 700,
     },
+    nameTitle: {
+        paddingBottom: 35,
+        color: "#FFFFFF",
+        marginLeft: 20,
+        marginRight: 20,
+        width: 200,
+        textAlign: "center",
+        fontSize: 20,
+        fontWeight: 700,
+    },
     row: {
         flex: 1,
         display: "flex",
@@ -98,6 +109,13 @@ const styles = {
         marginRight: 20,
         width: 100,
         textAlign: "center",
+    },
+    cellValueName: {
+        color: "#FFFFFF",
+        marginLeft: 20,
+        marginRight: 20,
+        width: 200,
+        textAlign: "left",
     },
     inputText: {
         backgroundColor: "#0d0f12",

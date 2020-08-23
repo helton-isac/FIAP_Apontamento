@@ -11,6 +11,8 @@ function UserReport(props) {
             const _myEntries = data.filter(element => element.login === props.login);
             if (_myEntries) {
                 setMyEntries(_myEntries);
+            } else {
+                setMyEntries([]);
             }
         })
     }, [props.login]);
