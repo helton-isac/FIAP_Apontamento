@@ -8,9 +8,10 @@ function TimeTracking(props) {
     const today = new Date();
     const ftDate = dateFormatted(today);
 
+    // eslint-disable-next-line
     useEffect(() => {
         DynamoUtils.getAllEntries((data) => {
-            const todayEntry = data.find(element => element.date === dateFormatted(new Date()));
+            const todayEntry = data.find(element => element.login === props.login && element.date === dateFormatted(new Date()));
 
             if (todayEntry) {
                 setTimeEntries(todayEntry.entries);
